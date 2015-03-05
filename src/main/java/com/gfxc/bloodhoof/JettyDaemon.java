@@ -67,8 +67,8 @@ public class JettyDaemon {
         if (!logDir.exists()) {
             logDir.mkdirs();
         }
-        OutputStream outputStream = new RolloverFileOutputStream(String.format("%s/%s.logyyyy_mm_dd", logDir.toString(), APP_KEY), true, APP_LOG_DAYS,
-                TimeZone.getTimeZone(TIME_ZONE), "", "yyyy-MM-dd");
+        OutputStream outputStream = new RolloverFileOutputStream(String.format("%s/%s.log.yyyy_mm_dd", logDir.toString(), APP_KEY), true, APP_LOG_DAYS,
+                TimeZone.getTimeZone(TIME_ZONE), "yyyy-MM-dd", "");
         PrintStream printStream = new PrintStream(outputStream);
         System.setOut(printStream);
         System.setErr(printStream);
@@ -130,7 +130,7 @@ public class JettyDaemon {
         WebAppContext webAppHandler = new WebAppContext();
         webAppHandler.setTempDirectory(new File(TMP_DIR));
         webAppHandler.setPersistTempDirectory(true);
-        webAppHandler.setParentLoaderPriority(false);
+        webAppHandler.setParentLoaderPriority(true);
         webAppHandler.setResourceBase(String.format("%s/%s", JETTY_WEBROOT, APP_KEY));
         handlers.addHandler(webAppHandler);
     }
